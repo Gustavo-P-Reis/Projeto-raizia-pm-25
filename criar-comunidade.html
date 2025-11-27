@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raizia - Criar Postagem Comunidade</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./src/css/criar-comunidade.css"/>    
+    <link rel="stylesheet" href="./src/css/resposive/pagin-da-comunidade-responsive.css">
+    <link rel="stylesheet" href="./src/css/resposive/notificacao2-responsive.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <button class="back-btn" onclick="window.location.href='index.html'">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="header-content">
+          <h1>Nova Postagem da Comunidade</h1>
+          <p>Compartilhe fotos e experiências sobre árvores</p>
+        </div>
+        <span class="badge-comunidade"
+          ><i class="fas fa-users"></i> Comunidade</span
+        >
+      </div>
+
+      <div class="alert-info">
+        <i class="fas fa-heart"></i>
+        <strong>Compartilhe momentos!</strong> Use esta seção para postar fotos
+        bonitas de árvores, compartilhar experiências e celebrar a natureza.
+      </div>
+
+      <form id="comunidadeForm" onsubmit="handleSubmit(event)">
+        <!-- Nome da Postagem -->
+        <div class="form-group">
+          <label for="postTitle"
+            >Título da Postagem <span class="required">*</span></label
+          >
+          <input
+            type="text"
+            id="postTitle"
+            class="form-input"
+            placeholder="Ex: Ipê Amarelo Florescendo na Praça"
+            required
+          />
+        </div>
+
+        <!-- Descrição -->
+        <div class="form-group">
+          <label for="postDescription"
+            >Descrição <span class="required">*</span></label
+          >
+          <textarea
+            id="postDescription"
+            class="form-textarea"
+            placeholder="Conte sua história, compartilhe suas experiências ou descreva a beleza que você encontrou..."
+            required
+          ></textarea>
+        </div>
+
+        <!-- Nome da Pessoa (Auto-preenchido) -->
+        <div class="form-group">
+          <label for="userName">Autor da Postagem</label>
+          <input
+            type="text"
+            id="userName"
+            class="form-input"
+            value=""
+            readonly
+            style="background: #f0f0f0"
+          />
+        </div>
+
+        <!-- Upload de Imagem -->
+        <div class="form-group">
+          <label>Foto <span class="required">*</span></label>
+          <div
+            class="image-upload"
+            onclick="document.getElementById('imageInput').click()"
+          >
+            <i class="fas fa-image"></i>
+            <p>Clique para fazer upload da sua foto</p>
+            <small>PNG, JPG ou JPEG (máx. 10MB)</small>
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              style="display: none"
+              onchange="previewImage(event)"
+              required
+            />
+          </div>
+          <div class="image-preview" id="imagePreview">
+            <img id="previewImg" src="" alt="Preview" />
+          </div>
+        </div>
+
+        <!-- Localização (Opcional) -->
+        <div class="form-group">
+          <label>
+            Localização (Opcional)
+            <small style="font-weight: normal; color: #999; margin-left: 10px">
+              <i class="fas fa-info-circle"></i> Adicione onde a foto foi tirada
+            </small>
+          </label>
+          <div class="address-grid">
+            <input
+              type="text"
+              id="street"
+              class="form-input full-width"
+              placeholder="Rua/Avenida (opcional)"
+            />
+            <input
+              type="text"
+              id="neighborhood"
+              class="form-input"
+              placeholder="Bairro"
+            />
+            <input
+              type="text"
+              id="city"
+              class="form-input"
+              placeholder="Cidade"
+            />
+            <input
+              type="text"
+              id="state"
+              class="form-input"
+              placeholder="Estado"
+            />
+            <input
+              type="text"
+              id="postalCode"
+              class="form-input"
+              placeholder="CEP"
+            />
+            <input
+              type="text"
+              id="latitude"
+              class="form-input"
+              placeholder="Latitude"
+            />
+            <input
+              type="text"
+              id="longitude"
+              class="form-input"
+              placeholder="Longitude"
+            />
+          </div>
+          <div class="map-container" id="mapContainer" style="display: none">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+        </div>
+
+        <!-- Hashtags -->
+        <div class="hashtags-section">
+          <h4>
+            <i class="fas fa-hashtag"></i>
+            Hashtags Sugeridas
+          </h4>
+          <p style="color: #666; font-size: 14px; margin-bottom: 15px">
+            Selecione hashtags para aumentar o alcance da sua postagem
+          </p>
+          <div class="hashtag-suggestions">
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #ÁrvoresBrasil
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #NaturezaUrbana
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #Arborização
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #MeioAmbiente
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #Sustentabilidade
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">#Verde</div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #Ecologia
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #Natureza
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #FlorestasUrbanas
+            </div>
+            <div class="hashtag-chip" onclick="toggleHashtag(this)">
+              #Biodiversidade
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacidade -->
+        <div class="privacy-section">
+          <h4>
+            <i class="fas fa-lock"></i>
+            Configurações de Privacidade
+          </h4>
+          <div class="privacy-options">
+            <div
+              class="privacy-option selected"
+              onclick="selectPrivacy(this, 'public')"
+            >
+              <i class="fas fa-globe"></i>
+              <h5>Público</h5>
+              <p>Todos podem ver</p>
+            </div>
+            <div
+              class="privacy-option"
+              onclick="selectPrivacy(this, 'friends')"
+            >
+              <i class="fas fa-user-friends"></i>
+              <h5>Amigos</h5>
+              <p>Apenas seus amigos</p>
+            </div>
+            <div
+              class="privacy-option"
+              onclick="selectPrivacy(this, 'private')"
+            >
+              <i class="fas fa-lock"></i>
+              <h5>Privado</h5>
+              <p>Apenas você</p>
+            </div>
+          </div>
+          <input type="hidden" id="privacyLevel" value="public" />
+        </div>
+
+        <!-- Botão Publicar -->
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i> Publicar na Comunidade
+        </button>
+      </form>
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+      </div>
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+      </a>
+      <a
+        href="#"
+        class="menu-item active"
+        id="notificationBtn"
+        onclick="toggleNotifications()"
+      >
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+        <span class="notification-badge" id="notificationBadge">5</span>
+      </a>
+      <a href="./perfil-do-usuario.html" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>Sobre</span>
+      </a>
+    </div>
+
+    <!-- Notification Popup -->
+    <div class="notification-popup" id="notificationPopup">
+      <div class="notification-header">
+        <h3>
+          <i class="fas fa-bell"></i>
+          Notificações
+        </h3>
+        <button class="mark-all-read" onclick="markAllAsRead()">
+          <i class="fas fa-check-double"></i> Marcar todas como lidas
+        </button>
+      </div>
+      <div class="notification-list" id="notificationList">
+        <!-- Notificações serão inseridas aqui -->
+      </div>
+      <div class="notification-footer">
+        <a href="#" class="view-all-link">Ver todas as notificações</a>
+      </div>
+    </div>
+
+<!-- Header Mobile (Topo) -->
+<div class="mobile-header">
+    <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+    </div>
+    <button class="notification-trigger" onclick="openNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">5</span>
+    </button>
+</div>
+
+<!-- Bottom Navigation Bar -->
+<nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+    </a>
+    <a href="#" class="bottom-nav-item" onclick="openNotifications()">
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+        <span class="nav-badge">5</span>
+    </a>
+    <a href="./perfil-do-usuario.html" class="bottom-nav-item">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+    </a>
+    <a href="#" class="bottom-nav-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Sair</span>
+    </a>
+</nav>
+
+<!-- Botão fechar dentro do notification-header -->
+<button class="notification-close" onclick="closeNotifications()">
+    <i class="fas fa-times"></i>
+</button>
+
+    <script src="./src/js/api.js"></script>
+    <script src="./src/js/criar-comunidade.js"></script>
+    <script src="./src/js/notificacao.js"></script>
+    <script src="./src/js/sidebar-notificacao.js"></script>
+  </body>
+</html>

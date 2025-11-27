@@ -1,0 +1,700 @@
+/* ============================================
+   SIDEBAR E NOTIFICAÇÕES - RESPONSIVIDADE UNIVERSAL
+   Arquivo CSS para barra lateral e notificações em mobile
+   Aplicável em TODAS as páginas do Raizia
+   ============================================ */
+
+/* ============================================
+   SOLUÇÃO: BOTTOM NAV + MODAL DE NOTIFICAÇÕES
+   - Desktop: Sidebar fixa na esquerda
+   - Mobile: Bottom navigation bar
+   - Notificações: Modal fullscreen em mobile
+   ============================================ */
+
+/* Desktop - Comportamento padrão (acima de 768px) */
+@media (min-width: 769px) {
+    .bottom-nav {
+        display: none !important;
+    }
+
+    .mobile-header {
+        display: none !important;
+    }
+
+    .sidebar {
+        display: flex !important;
+        flex-direction: column;
+    }
+
+    .main-content {
+        margin-left: 250px !important;
+        padding: 30px !important;
+    }
+
+    .notification-popup {
+        position: fixed;
+        left: 270px;
+        width: 420px;
+        top: 80px;
+        max-height: 600px;
+        border-radius: 20px;
+    }
+
+    .notification-overlay {
+        display: none;
+    }
+
+    .notification-close {
+        display: none;
+    }
+
+    .mark-all-read {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+    }
+}
+
+/* ============================================
+   MOBILE - BOTTOM NAVIGATION BAR
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Esconde sidebar tradicional */
+    .sidebar {
+        display: none !important;
+    }
+
+    /* Ajusta main content */
+    .main-content {
+        margin-left: 0 !important;
+        padding: 60px 15px 80px 15px !important;
+        width: 100% !important;
+    }
+
+    /* Header mobile no topo */
+    .mobile-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .mobile-header .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #667eea;
+    }
+
+    .mobile-header .logo i {
+        font-size: 24px;
+    }
+
+    .mobile-header .notification-trigger {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+    }
+
+    .mobile-header .notification-trigger:active {
+        transform: scale(0.9);
+        background: #667eea;
+        color: white;
+    }
+
+    .mobile-header .notification-trigger i {
+        font-size: 20px;
+    }
+
+    .mobile-header .notification-badge {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 18px;
+        height: 18px;
+        background: #e74c3c;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        border: 2px solid white;
+    }
+
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background: white;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 10px;
+        z-index: 1000;
+    }
+
+    .bottom-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 8px;
+        text-decoration: none;
+        color: #999;
+        transition: all 0.3s;
+        border-radius: 12px;
+        position: relative;
+    }
+
+    .bottom-nav-item:active {
+        transform: scale(0.9);
+    }
+
+    .bottom-nav-item i {
+        font-size: 22px;
+    }
+
+    .bottom-nav-item span {
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .bottom-nav-item.active {
+        color: #667eea;
+        background: #f0f4ff;
+    }
+
+    .bottom-nav-item .nav-badge {
+        position: absolute;
+        top: 6px;
+        right: 50%;
+        transform: translateX(50%);
+        margin-right: -12px;
+        width: 16px;
+        height: 16px;
+        background: #e74c3c;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 9px;
+        font-weight: bold;
+        border: 2px solid white;
+    }
+
+    /* ============================================
+       MODAL DE NOTIFICAÇÕES MOBILE
+       ============================================ */
+
+    .notification-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2000;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .notification-overlay.active {
+        display: block;
+        opacity: 1;
+    }
+
+    .notification-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100% !important;
+        max-height: 100% !important;
+        background: white;
+        z-index: 2001;
+        display: none;
+        flex-direction: column;
+        transform: translateY(100%);
+        transition: transform 0.3s ease-out;
+        border-radius: 0 !important;
+    }
+
+    .notification-popup.active {
+        display: flex;
+        transform: translateY(0);
+    }
+
+    /* Header do Modal */
+    .notification-header {
+        padding: 20px !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 0 !important;
+        flex-shrink: 0;
+    }
+
+    .notification-header h3 {
+        font-size: 18px !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .notification-close {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: white;
+        font-size: 20px;
+        transition: all 0.2s;
+    }
+
+    .notification-close:active {
+        transform: scale(0.9);
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .mark-all-read {
+        position: absolute;
+        top: 75px;
+        right: 20px;
+        width: auto !important;
+        padding: 8px 16px !important;
+        font-size: 12px !important;
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+        border-radius: 20px;
+        z-index: 10;
+    }
+
+    .mark-all-read:active {
+        transform: scale(0.95);
+    }
+
+    /* Lista de Notificações */
+    .notification-list {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-top: 50px;
+        max-height: none !important;
+    }
+
+    .notification-item {
+        padding: 16px 20px !important;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        gap: 12px;
+        min-height: 80px;
+    }
+
+    .notification-item:active {
+        background: #f8f9fa;
+    }
+
+    .notification-icon {
+        width: 42px !important;
+        height: 42px !important;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px !important;
+        flex-shrink: 0;
+    }
+
+    .notification-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .notification-text {
+        font-size: 14px !important;
+        line-height: 1.5;
+        margin-bottom: 6px;
+    }
+
+    .notification-time {
+        font-size: 12px !important;
+        color: #999;
+    }
+
+    .notification-empty {
+        padding: 60px 30px;
+        text-align: center;
+    }
+
+    .notification-empty i {
+        font-size: 64px;
+        color: #e0e0e0;
+        margin-bottom: 20px;
+    }
+
+    .notification-empty h4 {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .notification-empty p {
+        font-size: 14px;
+        color: #999;
+    }
+
+    /* Footer do Modal */
+    .notification-footer {
+        padding: 16px 20px !important;
+        border-top: 1px solid #f0f0f0;
+        background: white;
+        flex-shrink: 0;
+    }
+
+    .view-all-link {
+        display: block;
+        text-align: center;
+        color: #667eea;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 8px;
+    }
+
+    .view-all-link:active {
+        opacity: 0.7;
+    }
+}
+
+/* ============================================
+   SMARTPHONES PEQUENOS (480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 60px 10px 80px 10px !important;
+    }
+
+    .mobile-header {
+        padding: 0 15px;
+        height: 54px;
+    }
+
+    .mobile-header .logo {
+        font-size: 18px;
+    }
+
+    .mobile-header .logo i {
+        font-size: 22px;
+    }
+
+    .bottom-nav {
+        height: 65px;
+        padding: 0 5px;
+    }
+
+    .bottom-nav-item {
+        padding: 6px;
+    }
+
+    .bottom-nav-item i {
+        font-size: 20px;
+    }
+
+    .bottom-nav-item span {
+        font-size: 10px;
+    }
+
+    .notification-header {
+        padding: 16px !important;
+    }
+
+    .notification-header h3 {
+        font-size: 16px !important;
+    }
+
+    .notification-close {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    .mark-all-read {
+        top: 68px;
+        right: 15px;
+        padding: 6px 12px !important;
+        font-size: 11px !important;
+    }
+
+    .notification-list {
+        padding-top: 45px;
+    }
+
+    .notification-item {
+        padding: 14px 15px !important;
+        min-height: 72px;
+    }
+
+    .notification-icon {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 16px !important;
+    }
+
+    .notification-text {
+        font-size: 13px !important;
+    }
+
+    .notification-time {
+        font-size: 11px !important;
+    }
+}
+
+/* ============================================
+   SMARTPHONES MUITO PEQUENOS (360px)
+   ============================================ */
+
+@media (max-width: 360px) {
+    .main-content {
+        padding: 56px 8px 75px 8px !important;
+    }
+
+    .mobile-header {
+        padding: 0 12px;
+        height: 52px;
+    }
+
+    .mobile-header .logo {
+        font-size: 16px;
+    }
+
+    .mobile-header .logo i {
+        font-size: 20px;
+    }
+
+    .mobile-header .notification-trigger {
+        width: 36px;
+        height: 36px;
+    }
+
+    .mobile-header .notification-trigger i {
+        font-size: 18px;
+    }
+
+    .bottom-nav {
+        height: 60px;
+    }
+
+    .bottom-nav-item i {
+        font-size: 18px;
+    }
+
+    .bottom-nav-item span {
+        font-size: 9px;
+    }
+
+    .notification-header {
+        padding: 14px !important;
+    }
+
+    .notification-header h3 {
+        font-size: 15px !important;
+    }
+
+    .notification-item {
+        padding: 12px !important;
+        min-height: 68px;
+    }
+
+    .notification-icon {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 15px !important;
+    }
+
+    .notification-text {
+        font-size: 12px !important;
+    }
+
+    .notification-time {
+        font-size: 10px !important;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE
+   ============================================ */
+
+@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+    .main-content {
+        padding: 56px 15px 65px 15px !important;
+    }
+
+    .mobile-header {
+        height: 50px;
+    }
+
+    .bottom-nav {
+        height: 60px;
+    }
+
+    .notification-list {
+        padding-top: 40px;
+    }
+
+    .notification-item {
+        min-height: 60px;
+        padding: 10px 15px !important;
+    }
+
+    .mark-all-read {
+        top: 60px;
+    }
+}
+
+/* ============================================
+   ANIMAÇÕES SUAVES
+   ============================================ */
+
+@media (max-width: 768px) {
+    .notification-popup {
+        animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .notification-overlay {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+}
+
+/* ============================================
+   ACESSIBILIDADE
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .notification-popup,
+    .notification-overlay,
+    .bottom-nav-item,
+    .notification-item {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Safe area para iPhone X e similares */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    @media (max-width: 768px) {
+        .bottom-nav {
+            padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+            height: calc(70px + env(safe-area-inset-bottom));
+        }
+
+        .main-content {
+            padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+        }
+    }
+}
+
+/* ============================================
+   ESTADOS INTERATIVOS MELHORADOS
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Remove highlight azul do touch no iOS */
+    .bottom-nav-item,
+    .notification-trigger,
+    .notification-close,
+    .notification-item,
+    .mark-all-read {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    /* Feedback tátil */
+    .bottom-nav-item:active,
+    .notification-item:active {
+        opacity: 0.7;
+    }
+}
+
+/* ============================================
+   CORREÇÕES DE SOBREPOSIÇÃO
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Garante que nada fique atrás da bottom nav */
+    body {
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    /* Headers de páginas não devem ficar fixos no topo */
+    .header {
+        position: relative !important;
+        top: auto !important;
+    }
+
+    /* Cards e conteúdo devem ter espaço adequado */
+    .posts-feed,
+    .form-container,
+    .profile-content {
+        padding-bottom: 20px;
+    }
+}

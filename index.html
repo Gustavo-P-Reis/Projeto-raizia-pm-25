@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raizia - Rede Social de Árvores</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <link rel="stylesheet" href="./src/css/resposive/index-responsive.css">
+    <link rel="stylesheet" href="./src/css/resposive/notificacao2-responsive.css">
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+      </div>
+      <a href="#" class="menu-item active">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+      </a>
+      <a href="#" class="menu-item" id="nav-notifications">
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+      </a>
+      <a href="perfil-do-usuario.html" class="menu-item" id="nav-profile" style="display: none;">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+      </a>
+      <a href="#" class="menu-item" id="nav-logout" style="display: none;">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>Sobre</span>
+      </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <h1 id="welcome-message">Bem-vindo ao Raizia</h1>
+        <div class="auth-buttons" id="auth-buttons">
+          <a href="login.html" class="btn btn-secondary">Entrar</a>
+          <a href="login.html" class="btn btn-primary">Registrar</a>
+        </div>
+        <div class="user-profile-header" id="user-profile-header" style="display: none;">
+          <a href="perfil-do-usuario.html" id="header-user-link" class="user-info-link">
+            <img id="header-user-avatar" class="user-avatar" alt="Avatar do usuário" />
+            <span id="header-user-name" style="font-weight: 500; color: #2c3e50; font-size: 17px; letter-spacing: 0.3px; margin-left: 5px;"></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Create Post -->
+      <div class="create-post">
+        <input
+          type="text"
+          class="create-post-input"
+          placeholder="O que você quer compartilhar?"
+          id="createPostInput"
+        />
+
+        <div class="post-type-selector" id="postTypeSelector">
+          <h3 style="color: #333; margin-bottom: 10px">
+            Escolha o tipo de postagem:
+          </h3>
+          <div class="post-type-option" onclick="selectPostType('comunidade')">
+            <h3><i class="fas fa-users"></i> Comunidade</h3>
+            <p>Compartilhe fotos e experiências sobre árvores em geral</p>
+          </div>
+          <div class="post-type-option" onclick="selectPostType('plantio')">
+            <h3><i class="fas fa-seedling"></i> Plantio</h3>
+            <p>Cadastre locais adequados para plantio de árvores</p>
+          </div>
+          <div class="post-type-option" onclick="selectPostType('denuncia')">
+            <h3><i class="fas fa-exclamation-triangle"></i> Denúncia</h3>
+            <p>Reporte problemas com árvores que necessitam atenção</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Posts Feed -->
+      <div class="posts-feed" id="postsFeed">
+        <!-- Os posts serão carregados aqui dinamicamente pelo JavaScript -->
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+      </div>
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+      </a>
+      <a
+        href="#"
+        class="menu-item active"
+        id="notificationBtn"
+        onclick="toggleNotifications()"
+      >
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+        <span class="notification-badge" id="notificationBadge">5</span>
+      </a>
+      <a href="./perfil-do-usuario.html" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>Sobre</span>
+      </a>
+    </div>
+
+    <!-- Notification Popup -->
+    <div class="notification-popup" id="notificationPopup">
+      <div class="notification-header">
+        <h3>
+          <i class="fas fa-bell"></i>
+          Notificações
+        </h3>
+        <button class="mark-all-read" onclick="markAllAsRead()">
+          <i class="fas fa-check-double"></i> Marcar todas como lidas
+        </button>
+      </div>
+      <div class="notification-list" id="notificationList">
+        <!-- Notificações serão inseridas aqui -->
+      </div>
+      <div class="notification-footer">
+        <a href="#" class="view-all-link">Ver todas as notificações</a>
+      </div>
+    </div>
+
+<!-- Header Mobile (Topo) -->
+<div class="mobile-header">
+    <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+    </div>
+    <button class="notification-trigger" onclick="openNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">5</span>
+    </button>
+</div>
+
+<!-- Bottom Navigation Bar -->
+<nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+    </a>
+    <a href="#" class="bottom-nav-item" onclick="openNotifications()">
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+        <span class="nav-badge">5</span>
+    </a>
+    <a href="./perfil-do-usuario.html" class="bottom-nav-item">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+    </a>
+    <a href="#" class="bottom-nav-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Sair</span>
+    </a>
+</nav>
+
+<!-- Botão fechar dentro do notification-header -->
+<button class="notification-close" onclick="closeNotifications()">
+    <i class="fas fa-times"></i>
+</button>
+
+    <script src="./src/js/index.js"></script>
+    <script src="./src/js/notificacao.js"></script>
+    <script src="./src/js/api.js"></script>
+    <script src="./src/js/sidebar-notificacao.js"></script>
+  </body>
+</html>

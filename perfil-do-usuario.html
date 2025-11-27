@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raizia - Meu Perfil</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./src/css/perfil-do-usuario.css" />
+    <link rel="stylesheet" href="./src/css/resposive/perfil-responsive.css">
+    <link rel="stylesheet" href="./src/css/resposive/notificacao2-responsive.css">
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+      </div>
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+      </a>
+      <a href="perfil-do-usuario.html" class="menu-item active">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+      </a>
+      <a href="#" class="menu-item" id="logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>Sobre</span>
+      </a>
+    </div>
+    <div class="main-content">
+      <div class="profile-header">
+        <div class="profile-cover">
+          <img id="profile-cover-img" src="https://via.placeholder.com/1200x300" alt="Foto de capa do perfil" />
+          <button class="profile-cover-edit" onclick="document.getElementById('cover-input').click()">
+            <i class="fas fa-camera"></i> Alterar Capa
+          </button>
+          <input type="file" id="cover-input" style="display: none;" accept="image/*" onchange="handleCoverChange(event)">
+        </div>
+        <div class="profile-info">
+          <div class="profile-avatar-container">
+            <img id="profile-avatar-img" class="profile-avatar" src="https://via.placeholder.com/128" alt="Avatar do usuário" />
+            <div class="avatar-edit" onclick="document.getElementById('avatar-input').click()">
+              <i class="fas fa-camera"></i>
+            </div>
+            <input type="file" id="avatar-input" style="display: none;" accept="image/*" onchange="handleAvatarChange(event)">
+          </div>
+          <div class="profile-details">
+            <div class="profile-name-section">
+              <h1 id="profile-name"></h1>
+              <p class="profile-username" id="profile-username"></p>
+              <p class="profile-bio" id="profile-bio">
+              </p>
+              <div class="profile-stats">
+                <div class="stat-item">
+                  <div class="stat-number" id="stats-posts">0</div>
+                  <div class="stat-label">Postagens</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number" id="stats-likes">0</div>
+                  <div class="stat-label">Curtidas</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number" id="stats-denuncias">0</div>
+                  <div class="stat-label">Denúncias</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number" id="stats-plantios">0</div>
+                  <div class="stat-label">Plantios</div>
+                </div>
+              </div>
+            </div>
+            <button class="edit-profile-btn" onclick="openEditModal()">
+              <i class="fas fa-edit"></i> Editar Perfil
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Tabs -->
+      <div class="profile-tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'posts')">
+          <i class="fas fa-th-large"></i>
+          <span>Todas Postagens</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'plantio')">
+          <i class="fas fa-seedling"></i>
+          <span>Plantios</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'denuncia')">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>Denúncias</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'comunidade')">
+          <i class="fas fa-users"></i>
+          <span>Comunidade</span>
+        </button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="tab-content active" id="postsTab">
+        <div class="posts-grid">
+          <!-- Os posts do usuário serão carregados aqui dinamicamente -->
+        </div>
+      </div>
+
+      <div class="tab-content" id="plantioTab">
+        <div class="posts-grid">
+          <!-- Apenas posts de plantio -->
+        </div>
+      </div>
+
+      <div class="tab-content" id="denunciaTab">
+        <div class="posts-grid">
+          <!-- Apenas denúncias -->
+        </div>
+      </div>
+
+      <div class="tab-content" id="comunidadeTab">
+        <div class="posts-grid">
+          <!-- Apenas posts de comunidade -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Editar Perfil</h2>
+          <button class="close-modal" onclick="closeEditModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form onsubmit="saveProfile(event)">
+          <div class="form-group">
+            <label>Nome Completo</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Seu nome completo"
+              id="editName"
+            />
+          </div>
+          <div class="form-group">
+            <label>Nome de Usuário</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Seu nome de usuário"
+              id="editUsername"
+            />
+          </div>
+          <div class="form-group">
+            <label>Bio</label>
+            <textarea class="form-textarea" id="editBio" placeholder="Fale um pouco sobre você..."></textarea
+            >
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input
+              type="email"
+              class="form-input"
+              placeholder="seu@email.com"
+              id="editEmail"
+            />
+          </div>
+          <div class="form-group">
+            <label>Localização</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Sua cidade e estado"
+              id="editLocation"
+            />
+          </div>
+          <button type="submit" class="save-btn">
+            <i class="fas fa-save"></i> Salvar Alterações
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Change Status Modal -->
+    <div class="modal" id="statusModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Alterar Status do Workflow</h2>
+          <button class="close-modal" onclick="closeStatusModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="status-options">
+          <div class="status-option" onclick="changeStatus('nao-resolvido')">
+            <i class="fas fa-clock" style="color: #ffc107"></i>
+            <div class="status-option-content">
+              <h4>Não Resolvido</h4>
+              <p>O problema ainda não foi solucionado</p>
+            </div>
+          </div>
+          <div class="status-option" onclick="changeStatus('progresso')">
+            <i class="fas fa-spinner" style="color: #17a2b8"></i>
+            <div class="status-option-content">
+              <h4>Em Progresso</h4>
+              <p>O trabalho está sendo realizado</p>
+            </div>
+          </div>
+          <div class="status-option" onclick="changeStatus('resolvido')">
+            <i class="fas fa-check-circle" style="color: #28a745"></i>
+            <div class="status-option-content">
+              <h4>Resolvido</h4>
+              <p>O problema foi completamente solucionado</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+      </div>
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+      </a>
+      <a
+        href="#"
+        class="menu-item active"
+        id="notificationBtn"
+        onclick="toggleNotifications()"
+      >
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+        <span class="notification-badge" id="notificationBadge">5</span>
+      </a>
+      <a href="./perfil-do-usuario.html" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+      </a>
+      <a href="#" class="menu-item" id="logout-btn-2">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>Sobre</span>
+      </a>
+    </div>
+
+    <!-- Notification Popup -->
+    <div class="notification-popup" id="notificationPopup">
+      <div class="notification-header">
+        <h3>
+          <i class="fas fa-bell"></i>
+          Notificações
+        </h3>
+        <button class="mark-all-read" onclick="markAllAsRead()">
+          <i class="fas fa-check-double"></i> Marcar todas como lidas
+        </button>
+      </div>
+      <div class="notification-list" id="notificationList">
+        <!-- Notificações serão inseridas aqui -->
+      </div>
+      <div class="notification-footer">
+        <a href="#" class="view-all-link">Ver todas as notificações</a>
+      </div>
+    </div>
+
+<!-- Header Mobile (Topo) -->
+<div class="mobile-header">
+    <div class="logo">
+        <i class="fas fa-tree"></i>
+        <span>Raizia</span>
+    </div>
+    <button class="notification-trigger" onclick="openNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">5</span>
+    </button>
+</div>
+
+<!-- Bottom Navigation Bar -->
+<nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+    </a>
+    <a href="#" class="bottom-nav-item" onclick="openNotifications()">
+        <i class="fas fa-bell"></i>
+        <span>Notificações</span>
+        <span class="nav-badge">5</span>
+    </a>
+    <a href="./perfil-do-usuario.html" class="bottom-nav-item" id="bottom-nav-profile" style="display: none;">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+    </a>
+    <a href="#" class="bottom-nav-item" id="bottom-nav-logout" style="display: none;">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Sair</span>
+    </a>
+</nav>
+
+<!-- Botão fechar dentro do notification-header -->
+<button class="notification-close" onclick="closeNotifications()">
+    <i class="fas fa-times"></i>
+</button>
+
+    <script src="./src/js/api.js"></script>
+    <script src="./src/js/perfil-do-usuario.js"></script>
+    <script src="./src/js/notificacao.js"></script>
+    <script src="./src/js/sidebar-notificacao.js"></script>
+  </body>
+</html>
