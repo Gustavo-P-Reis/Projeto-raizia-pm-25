@@ -9,7 +9,7 @@ const API = {
       name: name,
       email: email,
       username: name.toLowerCase().replace(" ", ""),
-      avatarUrl: `https://ui-avatars.com/api/?name=${name.replace(" ", "+")}&background=random`,
+      avatarUrl: `https://ui-avatars.com/api/?name=${name.replace(" ", "+")}&length=2&background=random`,
     };
     localStorage.setItem("currentUser", JSON.stringify(user));
     return user;
@@ -23,7 +23,19 @@ const API = {
   // Pega o usuário atualmente logado
   getCurrentUser: () => {
     try {
-      return JSON.parse(localStorage.getItem("currentUser"));
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      
+      // **CORREÇÃO AUTOMÁTICA DO AVATAR**
+      // Verifica se o avatar é do ui-avatars e não tem o parâmetro 'length=2'
+      if (user && user.avatarUrl && user.avatarUrl.includes('ui-avatars.com') && !user.avatarUrl.includes('length=2')) {
+        // Reconstrói a URL com o parâmetro correto
+        const nameParam = user.name.replace(" ", "+");
+        user.avatarUrl = `https://ui-avatars.com/api/?name=${nameParam}&length=2&background=random`;
+        // Salva a correção de volta no localStorage para não precisar fazer de novo
+        localStorage.setItem("currentUser", JSON.stringify(user));
+      }
+
+      return user;
     } catch (e) {
       return null;
     }
@@ -42,7 +54,7 @@ const API = {
 
     // Se o nome foi alterado, mas o avatar não, gera um novo avatar com as iniciais
     if (updatedData.name && !updatedData.avatarUrl && !currentUser.avatarUrl.startsWith('data:image')) {
-        currentUser.avatarUrl = `https://ui-avatars.com/api/?name=${updatedData.name.replace(" ", "+")}&background=random`;
+        currentUser.avatarUrl = `https://ui-avatars.com/api/?name=${updatedData.name.replace(" ", "+")}&length=2&background=random`;
     }
 
     localStorage.setItem("currentUser", JSON.stringify(currentUser));

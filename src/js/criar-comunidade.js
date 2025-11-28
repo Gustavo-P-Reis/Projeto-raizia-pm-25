@@ -8,6 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // Preenche o nome do autor (se houver o campo no HTML)
   // document.getElementById('userName').value = currentUser.name;
+
+  // Inicializa o mapa Leaflet
+  const map = L.map('map').setView([-15.7801, -47.9292], 4); // Centralizado no Brasil
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // Adiciona um marcador inicial (opcional)
+  const marker = L.marker([-15.7801, -47.9292]).addTo(map)
+      .bindPopup('Arraste o marcador para o local da sua foto.')
+      .openPopup();
 });
 
 function previewImage(event) {
@@ -72,18 +84,16 @@ function previewImage(event) {
 
         // Mostrar mapa quando houver dados de localização
         document.getElementById('city').addEventListener('input', function() {
+            const mapContainer = document.getElementById('map');
             if (this.value) {
-                document.getElementById('mapContainer').style.display = 'flex';
+                mapContainer.style.display = 'block';
             } else {
-                document.getElementById('mapContainer').style.display = 'none';
+                mapContainer.style.display = 'none';
             }
         });
 
         // Auto-completar coordenadas (simulado)
         document.getElementById('postalCode').addEventListener('blur', function() {
-            if (this.value) {
-                document.getElementById('latitude').value = '-23.' + Math.floor(Math.random() * 900000 + 100000);
-                document.getElementById('longitude').value = '-46.' + Math.floor(Math.random() * 900000 + 100000);
-                document.getElementById('mapContainer').style.display = 'flex';
-            }
+            const mapContainer = document.getElementById('map');
+            if (this.value) { mapContainer.style.display = 'block'; }
         });

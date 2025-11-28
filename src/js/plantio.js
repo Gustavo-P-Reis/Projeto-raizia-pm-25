@@ -8,6 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "login.html";
     return;
   }
+
+  // Inicializa o mapa Leaflet
+  const map = L.map('map').setView([-15.7801, -47.9292], 4); // Centralizado no Brasil
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // Adiciona um marcador inicial (opcional)
+  const marker = L.marker([-15.7801, -47.9292]).addTo(map)
+      .bindPopup('Arraste o marcador para o local exato do plantio.')
+      .openPopup();
 });
 
 function previewImage(event) {

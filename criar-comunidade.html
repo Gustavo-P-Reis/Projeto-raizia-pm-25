@@ -8,6 +8,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
     <link rel="stylesheet" href="./src/css/criar-comunidade.css"/>    
     <link rel="stylesheet" href="./src/css/resposive/pagin-da-comunidade-responsive.css">
     <link rel="stylesheet" href="./src/css/resposive/notificacao2-responsive.css">
@@ -137,22 +141,8 @@
               class="form-input"
               placeholder="CEP"
             />
-            <input
-              type="text"
-              id="latitude"
-              class="form-input"
-              placeholder="Latitude"
-            />
-            <input
-              type="text"
-              id="longitude"
-              class="form-input"
-              placeholder="Longitude"
-            />
           </div>
-          <div class="map-container" id="mapContainer" style="display: none">
-            <i class="fas fa-map-marked-alt"></i>
-          </div>
+          <div id="map" style="height: 300px; margin-top: 15px; border-radius: 8px; display: none;"></div>
         </div>
 
         <!-- Hashtags -->
@@ -328,6 +318,7 @@
     <i class="fas fa-times"></i>
 </button>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./src/js/api.js"></script>
     <script src="./src/js/criar-comunidade.js"></script>
     <script src="./src/js/notificacao.js"></script>

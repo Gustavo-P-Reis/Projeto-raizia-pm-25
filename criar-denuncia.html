@@ -8,6 +8,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
     <link rel="stylesheet" href="./src/css/denuncia.css">
     <link rel="stylesheet" href="./src/css/resposive/denuncia-responsive.css">
     <link rel="stylesheet" href="./src/css/resposive/notificacao2-responsive.css">
@@ -259,24 +263,8 @@
               class="form-input"
               placeholder="CEP"
             />
-            <input
-              type="text"
-              id="latitude"
-              class="form-input"
-              placeholder="Latitude"
-              required
-            />
-            <input
-              type="text"
-              id="longitude"
-              class="form-input"
-              placeholder="Longitude"
-              required
-            />
           </div>
-          <div class="map-container">
-            <i class="fas fa-map-marked-alt"></i>
-          </div>
+          <div id="map" style="height: 300px; margin-top: 15px; border-radius: 8px;"></div>
         </div>
 
         <!-- Seção IA -->
@@ -413,6 +401,7 @@
     <i class="fas fa-times"></i>
 </button>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./src/js/api.js"></script> <!-- Adicionado antes -->
     <script src="./src/js/criar-denuncia.js"></script> <!-- Script da página -->
     <script src="./src/js/notificacao.js"></script>
